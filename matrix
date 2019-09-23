@@ -1,0 +1,207 @@
+#include<stdio.h>
+void accept(int x[10][10],int r,int c);
+void display(int x[10][10],int r,int c);
+void add(int x[10][10],int y[10][10],int z[10][10],int r, int c);
+void sub(int x[10][10],int y[10][10],int z[10][10],int r,int c);
+void transpose(int x[10][10],int y[10][10],int r,int c);
+void multiply(int x[10][10],int y[10][10],int z[10][10],int r,int c1,int c2);
+void saddlepoint(int x[10][10],int r,int c);
+void main()
+{
+int mat1[10][10],mat2[10][10],mat3[10][10];
+int choice,row1,row2,col1,col2;        
+do
+{
+printf("\n Main Menu : \n 1. Accept and display matrix1 \n 2. Accept and display matrix2 \n 3. Addition \n 4. Subtraction \n 5. Multiplication \n 6. Transpose \n 7. Saddle Point \n 8. Exit \n Enter your choice :\n");
+scanf("%d",&choice);
+switch(choice)
+{
+case 1:printf("\n Enter the number of rows in matrix 1\n");
+       scanf("%d",&row1);
+       printf("\n Enter the number of columns in matrix 1 \n");
+       scanf("%d",&col1);
+       accept(mat1,row1,col1);
+       printf("\n Matrix 1 :- \n");
+       display(mat1,row1,col1);
+       break;
+case 2:printf("\n Enter the number of rows in matrix 2 \n");
+       scanf("%d",&row2);
+       printf("\n Enter the number of columns in matrix 2 \n");
+       scanf("%d",&col2);
+       accept(mat2,row2,col2);
+       printf("\n Matrix 2 :- \n");
+       display(mat2,row2,col2);
+acase 3:if(row1==row2&&col1==col2)
+       {
+       printf("\n Addition of the matrices is :\n");
+       add(mat1,mat2,mat3,row1,col1);
+       display(mat3,row1,col1);
+       }
+      else 
+      {
+       printf("\n Addition of the matrices is not possible!! \n");
+       }
+       break;
+case 4:if(row1==row2&&col1==col2)
+       {
+       printf("\nsubtraction of the matrices(matrix1-matrix2) :\n");
+       sub(mat1,mat2,mat3,row1,col1);
+       display(mat3,row1,col1);
+       printf("\nsubtraction of the matrices(matrix2-matrix1) :\n");
+       sub(mat2,mat1,mat3,row1,col1);
+       display(mat3,row1,col1);
+       }
+       else 
+       {
+       printf("\n Subtraction of the matrices is not possible!!\n");
+       }
+       break;
+case 5:if(row2==col1)
+       {
+       printf("\n Matrix1 * Matrix2 -\n");
+       multiply(mat1,mat2,mat3,row1,row2,col2);
+       display(mat3,row1,col2);
+       }
+       else
+       {
+       printf("\n Multiplication of matrix1 * matrix2 is not possible \n");
+       }
+       if(col2==row1)
+       {
+       printf("\n Matrix2 * Matrix1 -\n");
+       multiply(mat2,mat1,mat3,row2,row1,col1);
+       display(mat3,row2,col1);
+       }
+       else
+       {
+       printf("\n Multiplication of matrix2 * matrix1 is not possible \n");
+       }
+       break;
+case 6:printf("\nTranspose of matrix 1 -\n ");
+       transpose(mat1,mat3,row1,col1);
+       display(mat3,col1,row1);
+       printf("\nTranspose of matrix 2 -\n ");
+       transpose(mat2,mat3,row2,col2);
+       display(mat3,col2,row2);
+       break;
+case 7:printf("\nFor matrix 1 : \n");
+       saddlepoint(mat1,row1,col1);
+       printf("\nFor matrix 2 : \n");
+       saddlepoint(mat2,row2,col2);
+       break;
+case 8:break;
+}
+}while(choice!=8);
+}
+
+
+void accept(int x[10][10],int r,int c)
+{
+int i,j;
+for(i=0;i<r;i++)
+{
+for(j=0;j<c;j++)
+{
+scanf("%d",&x[i][j]);
+}
+}
+}
+
+void display(int x[10][10],int r,int c)
+{
+int i,j;
+for(i=0;i<r;i++)
+{ 
+printf("\n");
+for(j=0;j<c;j++)
+{
+printf("%d ",x[i][j]);
+}
+}
+}
+
+void add(int x[10][10],int y[10][10],int z[10][10],int r, int c)
+{
+int i,j;
+for(i=0;i<r;i++)
+{
+for(j=0;j<c;j++)
+{
+z[i][j]=x[i][j]+y[i][j];
+}
+}
+}
+
+void sub(int x[10][10],int y[10][10],int z[10][10],int r, int c)
+{
+int i,j;
+for(i=0;i<r;i++)
+{
+for(j=0;j<c;j++)
+{
+z[i][j]=x[i][j]-y[i][j];
+}
+}
+}
+
+void transpose(int x[10][10],int y[10][10],int r,int c)
+{
+int i,j;
+for(i=0;i<r;i++)
+{
+for(j=0;j<c;j++)
+{
+y[j][i]=x[i][j];
+}
+}
+}
+
+void multiply(int x[10][10],int y[10][10],int z[10][10],int r,int c1,int c2)
+{
+int i,j,k;
+for(i=0;i<r;i++)
+{
+for(k=0;k<c2;k++)
+{
+z[i][k]=0;
+for(j=0;j<c1;j++)
+{
+z[i][k]+=(x[i][j]*y[j][k]);
+}
+}
+}
+}
+void saddlepoint(int x[10][10],int r,int c)
+{
+int flag=0;
+int i,j,k,min,max,pos;
+for(i=0;i<r;i++)
+{
+min=x[i][0];
+for(j=0;j<c;j++)
+{
+if(min>=x[i][j])
+{
+min=x[i][j];
+pos=j;
+}
+}
+max=x[0][pos];
+for(k=0;k<r;k++)
+{
+if(max<x[k][pos])
+{
+max=x[k][pos];
+}
+}
+if(min==max)
+{
+printf("\n Saddle point is present and its value is = %d",min);
+flag=1;
+}
+}
+if(flag==0)
+{
+printf("\nNo saddle Point \n");
+}
+}
